@@ -1,5 +1,22 @@
 pipeline {
     agent any
+    environment {
+
+        EMAIL_BODY =
+        """
+            <p>EXECUTED: Job <b>\'${env.JOB_NAME}:${env.BUILD_NUMBER})\'</b></p>
+            <p>
+            View console output at
+            "<a href="${env.BUILD_URL}">${env.JOB_NAME}:${env.BUILD_NUMBER}</a>"
+            </p>
+            <p><i>(Build log is attached.)</i></p>
+        """
+
+        EMAIL_SUBJECT_SUCCESS = "Status: 'SUCCESS' -Job \'${env.JOB_NAME}:${env.BUILD_NUMBER}\'"
+        EMAIL_SUBJECT_FAILURE = "Status: 'FAILURE' -Job \'${env.JOB_NAME}:${env.BUILD_NUMBER}\'"
+        EMAIL_RECEPIENT = 'bmarete10@gmail.com'
+        LIVE_SITE = 'https://secret-shore-37984.herokuapp.com/'
+    }
 
 
     tools {
@@ -35,14 +52,11 @@ pipeline {
     }
   post {
     success {
-      slackSend color: "good", message: "Successfully deployed to Heroku"
+      slackSend color: "good", message: "Build ${env.BUILD_NUMBER} of ${env.JOB_NAME} Succeeded. Deployed at ${LIVE_SITE}"
     }
-
     failure {
-      slackSend color: "danger", message: "Message from Jenkins Pipeline"
+      slackSend color: "danger", message: "Build ${env.BUILD_NUMBER} of ${env.JOB_NAME} failed. See ${env.BUILD_URL} for details."
     }
-
-
   }
 
 }
