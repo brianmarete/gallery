@@ -1,10 +1,28 @@
 pipeline {
     agent any
 
+    tools {
+        nodejs {
+            version "14.19.3"
+        }
+    }
+
     stages {
         stage ('Clone repository') {
             steps {
                 git 'https://github.com/brianmarete/gallery.git'
+            }
+        }
+
+        stage ('Install dependencies') {
+            steps {
+                sh 'npm install'
+            }
+        }
+
+        stage ('Run tests') {
+            steps {
+                sh 'npm test'
             }
         }
 
