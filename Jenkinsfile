@@ -34,9 +34,15 @@ pipeline {
         }
     }
   post {
+    success {
+      slackSend color: "good", message: "Successfully deployed to Heroku"
+    }
+
     failure {
       slackSend color: "danger", message: "Message from Jenkins Pipeline"
     }
+
+
   }
 
 }
