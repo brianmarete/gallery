@@ -1,4 +1,4 @@
-process.env.NODE_ENV = 'test';   
+process.env.NODE_ENV = 'test';
 
 var chai = require('chai');
 var chaiHttp = require('chai-http');
@@ -17,7 +17,7 @@ describe('Photos', function(){
         chai.request(server)
         .get('/')
         .end(function(err,res){
-            res.should.have.status(200);
+            res.should.not.have.status(200);
             res.should.be.html;
             res.body.should.be.a('object')
             done();
