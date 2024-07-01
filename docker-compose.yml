@@ -4,7 +4,6 @@ services:
   app:
     build:
       context: .
-      dockerfile: node.dockerfile
     image: bmarete/gallery:1.0
     container_name: gallery-app
     ports:
